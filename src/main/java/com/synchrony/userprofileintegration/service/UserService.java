@@ -46,4 +46,9 @@ public class UserService {
         return userRepository.findByUsername(username);
     }
 
+    public User updateUser(User user) {
+        // Assume the password is already encoded and shouldn't be changed.
+        return userRepository.save(user);
+    }
+
 }

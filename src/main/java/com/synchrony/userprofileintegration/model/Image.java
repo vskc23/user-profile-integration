@@ -10,28 +10,19 @@ public class Image {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    // Imgur-related fields
-    @Column(name = "imgur_id", unique = true)
-    private String imgurId; // The unique ID returned by Imgur
+    @Column(name = "imgur_link")
+    private String link;
 
-    private String link; // URL to the image hosted on Imgur
+    @Column(name = "delete_hash", unique = true)
+    private String deleteHash;
 
-    // Getters and Setters
-
+    // Getters and setters
     public Long getId() {
         return id;
     }
 
     public void setId(Long id) {
         this.id = id;
-    }
-
-    public String getImgurId() {
-        return imgurId;
-    }
-
-    public void setImgurId(String imgurId) {
-        this.imgurId = imgurId;
     }
 
     public String getLink() {
@@ -41,4 +32,15 @@ public class Image {
     public void setLink(String link) {
         this.link = link;
     }
+
+    public String getDeleteHash() {
+        return deleteHash;
+    }
+
+    public void setDeleteHash(String deleteHash) {
+        this.deleteHash = deleteHash;
+    }
+
+
 }
+
