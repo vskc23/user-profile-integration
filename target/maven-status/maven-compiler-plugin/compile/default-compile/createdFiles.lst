@@ -1,8 +1,12 @@
+com\synchrony\userprofileintegration\dto\UserResponseDTO.class
+com\synchrony\userprofileintegration\dto\UserRequestDTO.class
 com\synchrony\userprofileintegration\service\UserService.class
-com\synchrony\userprofileintegration\UserProfileIntegrationApplication.class
 com\synchrony\userprofileintegration\controller\UserController.class
-com\synchrony\userprofileintegration\repository\UserRepository.class
+com\synchrony\userprofileintegration\dto\ImageDTO.class
 com\synchrony\userprofileintegration\model\User.class
 com\synchrony\userprofileintegration\model\Image.class
 com\synchrony\userprofileintegration\service\ImgurService.class
+com\synchrony\userprofileintegration\UserProfileIntegrationApplication.class
+com\synchrony\userprofileintegration\repository\UserRepository.class
 com\synchrony\userprofileintegration\config\SecurityConfig.class
+com\synchrony\userprofileintegration\dto\UserProfileDTO.class

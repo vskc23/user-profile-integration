@@ -1,5 +1,9 @@
 package com.synchrony.userprofileintegration.controller;
 
+import com.synchrony.userprofileintegration.dto.ImageDTO;
+import com.synchrony.userprofileintegration.dto.UserProfileDTO;
+import com.synchrony.userprofileintegration.dto.UserRequestDTO;
+import com.synchrony.userprofileintegration.dto.UserResponseDTO;
 import com.synchrony.userprofileintegration.model.Image;
 import com.synchrony.userprofileintegration.model.User;
 import com.synchrony.userprofileintegration.service.ImgurService;
@@ -8,6 +12,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+
+import java.util.List;
 import java.util.Optional;
 
 /**
@@ -34,10 +40,16 @@ public class UserController {
      * @return the registered user details along with an HTTP OK status.
      */
     @PostMapping("/register")
-    public ResponseEntity<User> registerUser(@RequestBody User user) {
+    public ResponseEntity<UserResponseDTO> registerUser(@RequestBody UserRequestDTO userRequest) {
+        User user = new User();
+        user.setUsername(userRequest.getUsername());
+        user.setPassword(userRequest.getPassword());
+
         User registeredUser = userService.registerUser(user);
-        return ResponseEntity.ok(registeredUser);
+        UserResponseDTO responseDTO = new UserResponseDTO(registeredUser.getId(), registeredUser.getUsername());
+        return ResponseEntity.ok(responseDTO);
     }
+
 
     /**
      * Retrieves the profile of a user identified by the provided username.
@@ -49,9 +61,23 @@ public class UserController {
     @GetMapping("/users/{username}")
     public ResponseEntity<?> getUserProfile(@PathVariable String username) {
         Optional<User> userOpt = userService.findByUsername(username);
-        return userOpt.map(ResponseEntity::ok)
-                .orElseGet(() -> ResponseEntity.notFound().build());
+        if (userOpt.isPresent()) {
+            User user = userOpt.get();
+
+            // Convert List<Image> to List<ImageDTO>
+            List<ImageDTO> imageDTOs = user.getImages().stream()
+                    .map(image -> new ImageDTO(image.getId(), image.getImgurId(), image.getLink()))
+                    .toList();
+
+            // Create UserProfileDTO response
+            UserProfileDTO userProfileDTO = new UserProfileDTO(user.getId(), user.getUsername(), imageDTOs);
+            return ResponseEntity.ok(userProfileDTO);
+        }
+        return ResponseEntity.notFound().build();
     }
+
+
+
 
     /**
      * Uploads an image file for a specified user.
@@ -65,23 +91,28 @@ public class UserController {
     public ResponseEntity<?> uploadImage(@PathVariable String username,
                                          @RequestParam("file") MultipartFile file) {
         Optional<User> userOpt = userService.findByUsername(username);
-        if (!userOpt.isPresent()) {
-            return ResponseEntity.notFound().build();
-        }
-        String imageUrl = imgurService.uploadImage(file);
-        if (imageUrl == null) {
-            return ResponseEntity.status(500).body("Image upload failed");
-        }
-        // Create an Image entity with the details received from Imgur
-        Image newImage = new Image();
-        newImage.setImgurId("placeholder-delete-hash"); // Replace with the actual delete hash when available
-        newImage.setLink(imageUrl);
+        if (userOpt.isPresent()) {
+            User user = userOpt.get();
+            String imageUrl = imgurService.uploadImage(file);
 
-        User user = userOpt.get();
-        user.getImages().add(newImage);
-        userService.registerUser(user);
-        return ResponseEntity.ok(newImage);
+            if (imageUrl == null) {
+                return ResponseEntity.status(500).body("Image upload failed");
+            }
+
+            // Create Image entity and add to user profile
+            Image newImage = new Image();
+            newImage.setImgurId("placeholder-delete-hash");
+            newImage.setLink(imageUrl);
+            user.getImages().add(newImage);
+            userService.registerUser(user);
+
+            // Convert to ImageDTO for response
+            ImageDTO imageDTO = new ImageDTO(newImage.getId(), newImage.getImgurId(), newImage.getLink());
+            return ResponseEntity.ok(imageDTO);
+        }
+        return ResponseEntity.notFound().build();
     }
+
 
     /**
      * Deletes an image from the user's profile.
@@ -95,23 +126,28 @@ public class UserController {
     public ResponseEntity<?> deleteImage(@PathVariable String username,
                                          @PathVariable Long imageId) {
         Optional<User> userOpt = userService.findByUsername(username);
-        if (!userOpt.isPresent()) {
-            return ResponseEntity.notFound().build();
+        if (userOpt.isPresent()) {
+            User user = userOpt.get();
+            Image targetImage = user.getImages().stream()
+                    .filter(img -> img.getId().equals(imageId))
+                    .findFirst()
+                    .orElse(null);
+
+            if (targetImage == null) {
+                return ResponseEntity.notFound().build();
+            }
+
+            boolean deletionSuccess = imgurService.deleteImage(targetImage.getImgurId());
+            if (!deletionSuccess) {
+                return ResponseEntity.status(500).body("Image deletion failed");
+            }
+
+            user.getImages().remove(targetImage);
+            userService.registerUser(user);
+
+            return ResponseEntity.ok("Image deleted successfully");
         }
-        User user = userOpt.get();
-        Image targetImage = user.getImages().stream()
-                .filter(img -> img.getId().equals(imageId))
-                .findFirst()
-                .orElse(null);
-        if (targetImage == null) {
-            return ResponseEntity.notFound().build();
-        }
-        boolean deletionSuccess = imgurService.deleteImage(targetImage.getImgurId());
-        if (!deletionSuccess) {
-            return ResponseEntity.status(500).body("Image deletion failed");
-        }
-        user.getImages().remove(targetImage);
-        userService.registerUser(user);
-        return ResponseEntity.ok("Image deleted successfully");
+        return ResponseEntity.notFound().build();
     }
+
 }
