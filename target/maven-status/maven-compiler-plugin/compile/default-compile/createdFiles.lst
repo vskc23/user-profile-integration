@@ -5,3 +5,4 @@ com\synchrony\userprofileintegration\repository\UserRepository.class
 com\synchrony\userprofileintegration\model\User.class
 com\synchrony\userprofileintegration\model\Image.class
 com\synchrony\userprofileintegration\service\ImgurService.class
+com\synchrony\userprofileintegration\config\SecurityConfig.class
