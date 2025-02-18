@@ -1,42 +1,43 @@
 package com.synchrony.userprofileintegration.config;
 
+import com.synchrony.userprofileintegration.service.CustomUserDetailsService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
-import static org.springframework.security.config.Customizer.withDefaults;
 
-/**
- * Security configuration for the application.
- * Defines beans required for securing the application, including the PasswordEncoder.
- */
+
 @Configuration
 public class SecurityConfig {
-
-    /**
-     * Creates a PasswordEncoder bean that uses BCrypt hashing.
-     *
-     * @return a PasswordEncoder instance for encoding user passwords.
-     */
-    @Bean
-    public PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
-    }
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
-                .csrf(csrf -> csrf.disable())  // Disabling CSRF for API usage
+                .csrf(csrf -> csrf.disable())  // Disable CSRF for APIs
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/api/register", "/swagger-ui/**", "/v3/api-docs/**").permitAll()
-                        .anyRequest().authenticated()
+                        .requestMatchers("/api/register", "/swagger-ui/**", "/v3/api-docs/**").permitAll()  // Public endpoints
+                        .anyRequest().authenticated()  // Secure all other endpoints
                 )
-                .formLogin(withDefaults())  // Enables default login form authentication
-                .logout(withDefaults());    // Enables logout functionality
+                .httpBasic(basic -> {});  // Enable only Basic Authentication (NO FORM LOGIN)
+
         return http.build();
+    }
+
+    @Bean
+    public DaoAuthenticationProvider authProvider(CustomUserDetailsService userDetailsService, PasswordEncoder encoder) {
+        DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
+        authProvider.setUserDetailsService(userDetailsService);
+        authProvider.setPasswordEncoder(encoder);
+        return authProvider;
+    }
+
+    @Bean
+    public PasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
     }
 
 }
