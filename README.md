@@ -85,25 +85,25 @@ All sensitive properties (e.g., Imgur client credentials) are externalized into 
 ### Images
 
 1. **User Creation**
-   ![User Creation](../../Images/user_creation.png)
+   ![User Creation](Images/user_creation.png)
 
 2. **Swagger**
-   ![Swagger](../../Images/swagger.png)
+   ![Swagger](Images/swagger.png)
 
 3. **Authentication Prompt**
-   ![Authentication Prompt](../../Images/authentication_prompt.png)
+   ![Authentication Prompt](Images/authentication_prompt.png)
 
 4. **Added 2 Images**
-   ![Image 1](../../Images/added2Images.png)
+   ![Image 1](Images/added2Images.png)
 
 5. **Get User**
-   ![Get User](../../Images/getUser.png)
+   ![Get User](Images/getUser.png)
 
 6. **Logs**
-   ![Logs](../../Images/logs.png)
+   ![Logs](Images/logs.png)
 
 7. **Imgur Link Verification**
-   ![Imgur Link Verification](../../Images/imgur_verification.png)
+   ![Imgur Link Verification](Images/imgur_verification.png)
 
 8. **Deletion**
-   ![Deletion](../../Images/png.png)
+   ![Deletion](Images/png.png)
