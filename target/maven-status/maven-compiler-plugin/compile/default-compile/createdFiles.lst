@@ -12,5 +12,6 @@ com\synchrony\userprofileintegration\config\OpenAPIConfig.class
 com\synchrony\userprofileintegration\service\CustomUserDetailsService.class
 com\synchrony\userprofileintegration\UserProfileIntegrationApplication.class
 com\synchrony\userprofileintegration\repository\UserRepository.class
+com\synchrony\userprofileintegration\config\DotenvInitializer.class
 com\synchrony\userprofileintegration\config\SecurityConfig.class
 com\synchrony\userprofileintegration\dto\UserProfileDTO.class

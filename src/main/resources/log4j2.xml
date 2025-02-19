@@ -27,5 +27,10 @@
             <AppenderRef ref="Console"/>
             <AppenderRef ref="File"/>
         </Root>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-oauth2-resource-server</artifactId>
+        </dependency>
+
     </Loggers>
 </Configuration>
