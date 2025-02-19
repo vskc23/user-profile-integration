@@ -1,4 +1,4 @@
 -------------------------------------------------------------------------------
 Test set: com.synchrony.userprofileintegration.UserServiceTest
 -------------------------------------------------------------------------------
-Tests run: 3, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 2.695 s - in com.synchrony.userprofileintegration.UserServiceTest
+Tests run: 3, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 2.602 s - in com.synchrony.userprofileintegration.UserServiceTest
