@@ -8,11 +8,10 @@ import org.springframework.context.ConfigurableApplicationContext;
 public class DotenvInitializer implements ApplicationContextInitializer<ConfigurableApplicationContext> {
     @Override
     public void initialize(ConfigurableApplicationContext applicationContext) {
-        // Load the .env file if it exists
+        // Load the .env file
         Dotenv dotenv = Dotenv.configure()
                 .ignoreIfMissing()
                 .load();
-        // Set each entry as a system property
         dotenv.entries().forEach(entry -> System.setProperty(entry.getKey(), entry.getValue()));
     }
 }

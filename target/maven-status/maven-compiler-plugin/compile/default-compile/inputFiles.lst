@@ -1,5 +1,6 @@
 C:\Users\kckri\Desktop\Synchrony_Financial_API_ENG\user-profile-integration\src\main\java\com\synchrony\userprofileintegration\dto\UserResponseDTO.java
 C:\Users\kckri\Desktop\Synchrony_Financial_API_ENG\user-profile-integration\src\main\java\com\synchrony\userprofileintegration\service\CustomUserDetailsService.java
+C:\Users\kckri\Desktop\Synchrony_Financial_API_ENG\user-profile-integration\src\main\java\exception\UserNotFoundException.java
 C:\Users\kckri\Desktop\Synchrony_Financial_API_ENG\user-profile-integration\src\main\java\com\synchrony\userprofileintegration\config\SecurityConfig.java
 C:\Users\kckri\Desktop\Synchrony_Financial_API_ENG\user-profile-integration\src\main\java\com\synchrony\userprofileintegration\dto\UserProfileDTO.java
 C:\Users\kckri\Desktop\Synchrony_Financial_API_ENG\user-profile-integration\src\main\java\com\synchrony\userprofileintegration\service\UserService.java

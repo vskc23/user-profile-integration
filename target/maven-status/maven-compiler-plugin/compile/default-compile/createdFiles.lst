@@ -2,7 +2,6 @@ com\synchrony\userprofileintegration\dto\UserResponseDTO.class
 com\synchrony\userprofileintegration\dto\UserRequestDTO.class
 com\synchrony\userprofileintegration\service\UserService.class
 com\synchrony\userprofileintegration\controller\UserController.class
-com\synchrony\userprofileintegration\controller\UserController$UserNotFoundException.class
 com\synchrony\userprofileintegration\dto\ImageResponseDTO.class
 com\synchrony\userprofileintegration\dto\ImageDTO.class
 com\synchrony\userprofileintegration\model\User.class
@@ -15,3 +14,4 @@ com\synchrony\userprofileintegration\repository\UserRepository.class
 com\synchrony\userprofileintegration\config\DotenvInitializer.class
 com\synchrony\userprofileintegration\config\SecurityConfig.class
 com\synchrony\userprofileintegration\dto\UserProfileDTO.class
+exception\UserNotFoundException.class

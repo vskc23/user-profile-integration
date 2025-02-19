@@ -27,8 +27,8 @@ public class CustomUserDetailsService implements UserDetailsService {
         // Convert domain User into a Spring Security UserDetails object.
         return org.springframework.security.core.userdetails.User
                 .withUsername(domainUser.getUsername())
-                .password(domainUser.getPassword()) // This should be the encoded password.
-                .roles("USER") // Assign roles as needed.
+                .password(domainUser.getPassword())
+                .roles("USER") // Hardcoded role for now
                 .build();
     }
 }

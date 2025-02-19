@@ -19,7 +19,7 @@ public class SecurityConfig {
         http
                 .csrf(csrf -> csrf.disable())  // Disable CSRF for APIs
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/api/register", "/swagger-ui/**", "/v3/api-docs/**").permitAll()  // Public endpoints
+                        .requestMatchers("/api/register", "/swagger-ui/**", "/v3/api-docs/**").permitAll()  // Public endpoints -> For testing purpose
                         .anyRequest().authenticated()  // Secure all other endpoints
                 )
                 .httpBasic(basic -> {});  // Enable only Basic Authentication (NO FORM LOGIN)

@@ -1,6 +1,7 @@
 package com.synchrony.userprofileintegration.service;
 import com.synchrony.userprofileintegration.model.User;
 import com.synchrony.userprofileintegration.repository.UserRepository;
+import exception.UserNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.util.Optional;
@@ -43,11 +44,12 @@ public class UserService {
      * @return an Optional containing the user if found, or empty if not.
      */
     public Optional<User> findByUsername(String username) {
-        return userRepository.findByUsername(username);
+        User user = userRepository.findByUsername(username)
+                .orElseThrow(() -> new UserNotFoundException(username));
+        return Optional.of(user);
     }
 
     public User updateUser(User user) {
-        // Assume the password is already encoded and shouldn't be changed.
         return userRepository.save(user);
     }
 
